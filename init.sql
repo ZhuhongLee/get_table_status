@@ -15,6 +15,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for mysql_info_schema
 -- ----------------------------
+
+
 DROP TABLE IF EXISTS `mysql_info_schema`;
 CREATE TABLE `mysql_info_schema` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
@@ -30,12 +32,11 @@ CREATE TABLE `mysql_info_schema` (
   `autoincr_value` bigint(11) DEFAULT NULL,
   `autoincr_usage` decimal(4,4) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_serverid_time_table_rows` (`server_id`,`time`,`table_rows`),
-  KEY `idx_time_table_tblength` (`server_id`,`time`,`data_length`) USING BTREE,
-  KEY `idx_time_table_idxlength` (`server_id`,`time`,`index_length`) USING BTREE,
-  KEY `idx_time_table_incr` (`server_id`,`time`,`autoincr_usage`) USING BTREE,
-  KEY `idx_time` (`time`)
-) ENGINE=InnoDB   DEFAULT CHARSET=utf8;
+  KEY `idx_time_table_rows` (`time`,`table_rows`),
+  KEY `idx_time_table_size` (`time`,`data_length`),
+  KEY `idx_time_index_size` (`time`,`index_length`),
+  KEY `idx_time_incr_usage` (`time`,`autoincr_usage`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for table_columns
@@ -70,5 +71,5 @@ CREATE TABLE `tables` (
   `AUTO_INCREMENT` bigint(21) unsigned DEFAULT NULL,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB   DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
