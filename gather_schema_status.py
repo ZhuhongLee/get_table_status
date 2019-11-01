@@ -10,6 +10,7 @@ Date:
 import schedule
 import time
 import pymysql as  MySQLdb
+from retrying import retry
 from settings import DBLIST_INFO, MONITORDB_INFO
 
 
@@ -25,7 +26,7 @@ MAX_INT = {"tinyint": 127,
            "unsigned_bigint": 18446744073709551615  # 2**64-1
            }
 
-
+@retry
 def migrate_table_and_columns_info(*dbinfo):
     '''
     清除临时表数据，然后从各个被监控实例迁移数据过来
